@@ -11,14 +11,12 @@ on:
 
 jobs:
   build:
-
     runs-on: macos-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Build
-      run: swift build -v
-    - name: Run iOS tests
+      - uses: actions/checkout@v4
+      - name: Build
+        run: swift build -v
+      - name: Run iOS tests
         run: |
           xcodebuild \
             -scheme swiftui-alert-advance \
