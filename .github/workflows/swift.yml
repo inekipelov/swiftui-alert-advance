@@ -1,0 +1,27 @@
+name: Swift Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Xcode 15.4
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: "15.4"
+
+      - name: Run iOS tests
+        run: |
+          xcodebuild \
+            -scheme swiftui-alert-advance \
+            -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
+            -skipPackagePluginValidation \
+            -skipMacroValidation \
+            test
