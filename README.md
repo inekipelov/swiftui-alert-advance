@@ -12,23 +12,21 @@ Embed SwiftUI views inside `UIAlertController` alerts and action sheets with sim
 - Custom SwiftUI content inside `UIAlertController`.
 - Drop-in modifiers – no need to rework existing alerts or confirmation dialogs.
 
-## Installation
-
-Add via Swift Package Manager:
-
-```swift
-dependencies: [
-    .package(url: "https://github.com/inekipelov/swiftui-alert-advance.git", from: "0.1.0")
-],
-targets: [
-    .target(
-        name: "YourTarget",
-        dependencies: [
-            .product(name: "AlertAdvance", package: "swiftui-alert-advance")
-        ]
-    )
-]
-```
+## Preview
+<table>
+  <tr>
+    <td align="center">Alert content</td>
+    <td align="center">Confirmation dialog content</td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="Resources/alert.gif" alt="Alert preview" width="320" style="object-fit: contain;" />
+    </td>
+    <td align="center">
+      <img src="Resources/confirmationDialog.gif" alt="Confirmation dialog preview" width="320"style="object-fit: contain;" />
+    </td>
+  </tr>
+</table>
 
 ## Usage
 
@@ -69,4 +67,21 @@ struct ContentView: View {
         .padding()
     }
 }
+```
+## Installation
+
+Add via Swift Package Manager:
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/inekipelov/swiftui-alert-advance.git", from: "0.1.0")
+],
+targets: [
+    .target(
+        name: "YourTarget",
+        dependencies: [
+            .product(name: "AlertAdvance", package: "swiftui-alert-advance")
+        ]
+    )
+]
 ```
