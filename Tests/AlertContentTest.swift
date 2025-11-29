@@ -7,11 +7,10 @@ import SwiftUI
 @MainActor
 final class AlertContentTest: XCTestCase {
     func testContentNotEvaluatedWhenAlertNotPresented() {
-        var isPresented = false
+        let isPresented = false
         var builderInvoked = false
-        let binding = Binding<Bool>(get: { isPresented }, set: { isPresented = $0 })
 
-        _ = Text("Host").alertContent(isPresented: binding) {
+        _ = Text("Host").alertContent(isPresented: isPresented) {
             builderInvoked = true
             return Text("Payload")
         }
@@ -22,7 +21,7 @@ final class AlertContentTest: XCTestCase {
     func testContentEvaluatedWhenAlertPresented() {
         var builderInvoked = false
 
-        _ = Text("Host").alertContent(isPresented: .constant(true)) {
+        _ = Text("Host").alertContent(isPresented: true) {
             builderInvoked = true
             return Text("Payload")
         }
@@ -33,15 +32,15 @@ final class AlertContentTest: XCTestCase {
     func testDataDrivenContentOnlyEvaluatesWhenDataAndPresentationExist() {
         var builderCalls = 0
 
-        _ = Text("Host").alertContent(isPresented: .constant(false), presenting: "value") { _ in
+        _ = Text("Host").alertContent(isPresented: false, presenting: "value") { _ in
             builderCalls += 1
             return Text("Payload")
         }
-        _ = Text("Host").alertContent(isPresented: .constant(true), presenting: Optional<String>.none) { _ in
+        _ = Text("Host").alertContent(isPresented: true, presenting: Optional<String>.none) { _ in
             builderCalls += 1
             return Text("Payload")
         }
-        _ = Text("Host").alertContent(isPresented: .constant(true), presenting: "value") { _ in
+        _ = Text("Host").alertContent(isPresented: true, presenting: "value") { _ in
             builderCalls += 1
             return Text("Payload")
         }
@@ -53,15 +52,15 @@ final class AlertContentTest: XCTestCase {
         struct SampleError: LocalizedError {}
         var builderCalls = 0
 
-        _ = Text("Host").alertContent(isPresented: .constant(true), error: Optional<SampleError>.none) { _ in
+        _ = Text("Host").alertContent(isPresented: true, error: Optional<SampleError>.none) { _ in
             builderCalls += 1
             return Text("Payload")
         }
-        _ = Text("Host").alertContent(isPresented: .constant(false), error: SampleError()) { _ in
+        _ = Text("Host").alertContent(isPresented: false, error: SampleError()) { _ in
             builderCalls += 1
             return Text("Payload")
         }
-        _ = Text("Host").alertContent(isPresented: .constant(true), error: SampleError()) { _ in
+        _ = Text("Host").alertContent(isPresented: true, error: SampleError()) { _ in
             builderCalls += 1
             return Text("Payload")
         }
