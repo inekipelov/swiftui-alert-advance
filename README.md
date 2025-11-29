@@ -10,7 +10,7 @@ Embed SwiftUI views inside `UIAlertController` alerts and action sheets with sim
 
 ## Highlights
 - Custom SwiftUI content inside `UIAlertController`.
-– Editing tint color for concrete `UIAlertController`.
+- Editing tint color for concrete `UIAlertController`.
 - Drop-in modifiers – no need to rework existing alerts or confirmation dialogs.
 
 ## Preview
