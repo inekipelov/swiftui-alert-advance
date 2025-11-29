@@ -75,7 +75,7 @@ Add via Swift Package Manager:
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/inekipelov/swiftui-alert-advance.git", from: "0.1.0")
+    .package(url: "https://github.com/inekipelov/swiftui-alert-advance.git", from: "0.2.0")
 ],
 targets: [
     .target(
