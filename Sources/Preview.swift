@@ -25,10 +25,11 @@ struct RainbowCircle: View {
 }
 
 struct ColoredAlertButton: View {
-    @State private(set) var isPresented = false
     let color: Color
+    @State private(set) var isPresented = false
     @State private(set) var sliderValue: Double = 0
     @State private(set) var isEnabled: Bool = false
+    @State private(set) var text: String = ""
     
     var body: some View {
         Button("Alert Button") {
@@ -40,7 +41,9 @@ struct ColoredAlertButton: View {
         .alert("SwiftUI", isPresented: $isPresented, actions: {
             Button("Done") {}
                 .keyboardShortcut(.defaultAction)
+                .disabled(!isEnabled)
             Button("Close", role: .cancel) {}
+            TextField("TestField", text: $text)
         }, message: {
             Text("Alert Advance")
         })
@@ -55,10 +58,10 @@ struct ColoredAlertButton: View {
     }
 }
 struct ColoredConfirmationDialogButton: View {
-    @State private(set) var isPresented = false
     let color: Color
+    @State private(set) var isPresented = false
     @State private(set) var sliderValue: Double = 0
-    @State private(set) var isEnabled: Bool = false
+    @State private(set) var isEnabled: Bool = true
     
     var body: some View {
         Button("Confirmation Button") {
