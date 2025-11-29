@@ -11,12 +11,13 @@ import UIKit
 public extension View {
     @MainActor
     func alertContent<C>(
-        isPresented: Binding<Bool>,
+        isPresented: Bool,
+        tint: Color? = nil,
         @ViewBuilder content: () -> C
     ) -> some View where C: View {
         self.background {
-            if isPresented.wrappedValue {
-                AlertControllerContent {
+            if isPresented {
+                AlertControllerContent(preferredStyle: .alert, tint: tint) {
                     content()
                 }
             }
@@ -25,13 +26,14 @@ public extension View {
     
     @MainActor
     func alertContent<T, C>(
-        isPresented: Binding<Bool>,
+        isPresented: Bool,
         presenting data: T?,
+        tint: Color? = nil,
         @ViewBuilder content: (T) -> C
     ) -> some View where C: View {
         self.background {
-            if isPresented.wrappedValue, let data {
-                AlertControllerContent {
+            if isPresented, let data {
+                AlertControllerContent(preferredStyle: .alert, tint: tint) {
                     content(data)
                 }
             }
@@ -40,13 +42,14 @@ public extension View {
     
     @MainActor
     func alertContent<E, C>(
-        isPresented: Binding<Bool>,
+        isPresented: Bool,
         error: E?,
+        tint: Color? = nil,
         @ViewBuilder content: (E) -> C
     ) -> some View where E : LocalizedError, C : View {
         self.background {
-            if isPresented.wrappedValue, let error {
-                AlertControllerContent {
+            if isPresented, let error {
+                AlertControllerContent(preferredStyle: .alert, tint: tint) {
                     content(error)
                 }
             }
@@ -67,11 +70,10 @@ public extension View {
     }, message: {
         Text("Demo Alert Advance")
     })
-    .alertContent(isPresented: $isPresented) {
+    .alertContent(isPresented: isPresented) {
         Rectangle()
             .fill(Color.red)
     }
 }
 #endif
-
 #endif

@@ -10,6 +10,7 @@ Embed SwiftUI views inside `UIAlertController` alerts and action sheets with sim
 
 ## Highlights
 - Custom SwiftUI content inside `UIAlertController`.
+– Editing tint color for concrete `UIAlertController`.
 - Drop-in modifiers – no need to rework existing alerts or confirmation dialogs.
 
 ## Preview
@@ -44,7 +45,7 @@ struct ContentView: View {
                 .alert("Title", isPresented: $showAlert) {
                     Button("OK") {}
                 }
-                .alertContent(isPresented: $showAlert) {
+                .alertContent(isPresented: showAlert) {
                     VStack {
                         Text("Custom alert content")
                         ProgressView()
@@ -56,7 +57,7 @@ struct ContentView: View {
                 .confirmationDialog("Title", isPresented: $showSheet) {
                     Button("Action") {}
                 }
-                .confirmationDialogContent(isPresented: $showSheet) {
+                .confirmationDialogContent(isPresented: showSheet) {
                     VStack {
                         Text("Custom sheet content")
                         Image(systemName: "hand.thumbsup.fill")
