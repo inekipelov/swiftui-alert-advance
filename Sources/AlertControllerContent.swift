@@ -33,11 +33,19 @@ struct AlertControllerContent<Content: View>: UIViewRepresentable {
 }
 
 private extension AlertControllerContent {
+    func alertController(for uiView: UIView) -> UIAlertController? {
+        guard let alertController = uiView.parentViewController?.alertController,
+              alertController.preferredStyle == preferredStyle
+        else {
+            return nil
+        }
+        return alertController
+    }
+    
     @MainActor
     func embedContentIfPossible(in uiView: UIView) {
         guard
-            let alertController = uiView.parentViewController?.alertController,
-            alertController.preferredStyle == preferredStyle
+            let alertController = alertController(for: uiView)
         else {
             return
         }
@@ -58,8 +66,7 @@ private extension AlertControllerContent {
     @MainActor
     func updateLayoutContentIfPossible(in uiView: UIView) {
         guard
-            let alertController = uiView.parentViewController?.alertController,
-            alertController.preferredStyle == preferredStyle
+            let alertController = alertController(for: uiView)
         else {
             return
         }

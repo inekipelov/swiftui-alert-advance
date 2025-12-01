@@ -62,18 +62,31 @@ public extension View {
 @available(iOS 17.0, *)
 #Preview {
     @Previewable @State var isPresented: Bool = false
+    @Previewable @State var selectedColor: Color = .blue
+    @Previewable @State var sliderValue: Double = 0.0
     
-    Button("Show Alert") {
-        isPresented.toggle()
-    }
-    .confirmationDialog("SwiftUI", isPresented: $isPresented, titleVisibility: .visible, actions: {
-        Button("Close") {}
-    }, message: {
-        Text("Demo Alert Advance")
-    })
-    .confirmationDialogContent(isPresented: isPresented) {
-        Rectangle()
-            .fill(Color.red)
+    HStack {
+        ColorPicker("Tint Color", selection: $selectedColor)
+            .labelsHidden()
+        Button("Show Alert") {
+            isPresented.toggle()
+        }
+        .controlSize(.large)
+        .buttonStyle(.bordered)
+        .tint(selectedColor)
+        .confirmationDialog("SwiftUI", isPresented: $isPresented, titleVisibility: .visible, actions: {
+            Button("Done") {}
+                .keyboardShortcut(.defaultAction)
+            Button("Close", role: .cancel) {}
+        }, message: {
+            Text("Demo Alert Advance")
+        })
+        .confirmationDialogContent(isPresented: isPresented, tint: selectedColor) {
+            Group {
+                Slider(value: $sliderValue, in: 0...100)
+            }
+            .padding(.horizontal)
+        }
     }
 }
 #endif

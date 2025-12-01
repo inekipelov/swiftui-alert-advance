@@ -61,18 +61,38 @@ public extension View {
 @available(iOS 17.0, *)
 #Preview {
     @Previewable @State var isPresented: Bool = false
-    
-    Button("Show Alert") {
-        isPresented.toggle()
-    }
-    .alert("SwiftUI", isPresented: $isPresented, actions: {
-        Button("Close") {}
-    }, message: {
-        Text("Demo Alert Advance")
-    })
-    .alertContent(isPresented: isPresented) {
-        Rectangle()
-            .fill(Color.red)
+    @Previewable @State var selectedColor: Color = .blue
+    @Previewable @State var sliderValue: Double = 0.0
+    @Previewable @State var isDoneEnabled: Bool = false
+    @Previewable @State var alertTextFieldText: String = ""
+
+    HStack {
+        ColorPicker("Tint Color", selection: $selectedColor)
+            .labelsHidden()
+        Button("Show Alert") {
+            isPresented.toggle()
+        }
+        .controlSize(.large)
+        .buttonStyle(.bordered)
+        .tint(selectedColor)
+        .shadow(radius: 0.2)
+        .alert("SwiftUI", isPresented: $isPresented, actions: {
+            Button("Done") {}
+                .keyboardShortcut(.defaultAction)
+                .disabled(!isDoneEnabled)
+            Button("Close", role: .cancel) {}
+            TextField("Field", text: $alertTextFieldText)
+        }, message: {
+            Text("Demo Alert Advance")
+        })
+        .alertContent(isPresented: isPresented, tint: selectedColor) {
+            Group {
+                Slider(value: $sliderValue, in: 0...100)
+                Toggle("Enable Done", isOn: $isDoneEnabled)
+                    .tint(selectedColor)
+            }
+            .padding(.horizontal)
+        }
     }
 }
 #endif

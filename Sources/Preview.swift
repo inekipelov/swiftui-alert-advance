@@ -98,10 +98,10 @@ struct ColoredConfirmationDialogButton: View {
             Color.black.ignoresSafeArea()
             VStack {
                 ColoredAlertButton(color: .orange)
-                ColoredConfirmationDialogButton(color: .green)
+                ColoredAlertButton(color: .green)
                 ColoredAlertButton(color: .indigo)
                 ColoredConfirmationDialogButton(color: .pink)
-                ColoredAlertButton(color: .purple)
+                ColoredConfirmationDialogButton(color: .purple)
             }
         }
         .toolbar {
