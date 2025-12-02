@@ -4,7 +4,8 @@ import PackageDescription
 let package = Package(
     name: "swiftui-alert-advance",
     platforms: [
-        .iOS(.v15)
+        .iOS(.v15),
+        .macCatalyst(.v15)
     ],
     products: [
         .library(

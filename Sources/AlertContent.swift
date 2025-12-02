@@ -7,7 +7,7 @@ import SwiftUI
 #if canImport(UIKit)
 import UIKit
 
-@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+@available(iOS 15.0, macCatalyst 15.0, *)
 public extension View {
     @MainActor
     func alertContent<C>(
@@ -57,8 +57,8 @@ public extension View {
     }
 }
 
-#if DEBUG && os(iOS)
-@available(iOS 17.0, *)
+#if DEBUG && (os(iOS) || targetEnvironment(macCatalyst))
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
 #Preview {
     @Previewable @State var isPresented: Bool = false
     @Previewable @State var selectedColor: Color = .blue

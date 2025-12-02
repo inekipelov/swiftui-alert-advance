@@ -3,7 +3,7 @@ import XCTest
 import SwiftUI
 @testable import AlertAdvance
 
-@available(iOS 15.0, *)
+@available(iOS 15.0, macCatalyst 15.0, *)
 @MainActor
 final class ConfirmationDialogContentTest: XCTestCase {
     func testContentNotEvaluatedWhenConfirmationDialogNotPresented() {

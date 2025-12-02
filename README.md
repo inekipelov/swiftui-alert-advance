@@ -5,8 +5,9 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Swift Tests](https://github.com/inekipelov/swiftui-alert-advance/actions/workflows/swift.yml/badge.svg)](https://github.com/inekipelov/swiftui-alert-advance/actions/workflows/swift.yml)  
 [![iOS](https://img.shields.io/badge/iOS-15.0+-blue.svg)](https://developer.apple.com/ios/)
+[![Mac Catalyst](https://img.shields.io/badge/Mac%20Catalyst-15.0+-blue.svg)](https://developer.apple.com/mac-catalyst/)
 
-Embed SwiftUI views inside `UIAlertController` alerts and action sheets with simple `alertContent` and `confirmationDialogContent` modifiers.
+Embed SwiftUI views inside `UIAlertController` alerts and action sheets with simple `alertContent` and `confirmationDialogContent` modifiers. Works on iOS/iPadOS 15+ and Mac Catalyst 15+.
 
 ## Highlights
 - Custom SwiftUI content inside `UIAlertController`.

@@ -6,7 +6,7 @@ import SwiftUI
 #if canImport(UIKit)
 import UIKit
 
-#if DEBUG && os(iOS)
+#if DEBUG && (os(iOS) || targetEnvironment(macCatalyst))
 struct RainbowCircle: View {
     @State private var color: Color = .black
     
@@ -88,7 +88,7 @@ struct ColoredConfirmationDialogButton: View {
     }
 }
 
-@available(iOS 17.0, *)
+@available(iOS 17.0, macCatalyst 17.0, *)
 #Preview {
     @Previewable @State var isDialogPresented: Bool = false
     @Previewable @State var isAlertPresented: Bool = false

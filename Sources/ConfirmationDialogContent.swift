@@ -57,9 +57,8 @@ public extension View {
 }
 
 
-#if DEBUG && os(iOS)
-
-@available(iOS 17.0, *)
+#if DEBUG && (os(iOS) || targetEnvironment(macCatalyst))
+@available(iOS 17.0, macOS 14.0, tvOS 17.0, watchOS 10.0, visionOS 1.0, *)
 #Preview {
     @Previewable @State var isPresented: Bool = false
     @Previewable @State var selectedColor: Color = .blue
