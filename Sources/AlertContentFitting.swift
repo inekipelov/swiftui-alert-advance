@@ -3,7 +3,6 @@
 //
 
 import SwiftUI
-import UIKit
 
 public struct AlertContentFitting: Sendable, Hashable {
     private let horizontal: AxisMode
@@ -109,4 +108,3 @@ private extension AlertContentFitting {
         }
     }
 }
-

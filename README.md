@@ -12,6 +12,7 @@ Embed SwiftUI views inside `UIAlertController` alerts and action sheets with sim
 ## Highlights
 - Custom SwiftUI content inside `UIAlertController`.
 - Editing tint color for concrete `UIAlertController`.
+- Alert/sheet dynamically re-measures and resizes when your SwiftUI content changes (e.g., toggles, sliders, collapsible views).
 - Drop-in modifiers – no need to rework existing alerts or confirmation dialogs.
 
 ## Preview
@@ -37,33 +38,55 @@ import SwiftUI
 import AlertAdvance
 
 struct ContentView: View {
-    @State private var showAlert = false
-    @State private var showSheet = false
+    @State private var isAlertPresented = false
+    @State private var isDialogPresented = false
+    @State private var selectedColor: Color = .blue
+    @State private var sliderValue: Double = 0
+    @State private var isDoneEnabled: Bool = false
+    @State private var alertTextFieldText: String = ""
+    @State private var date: Date = .now
 
     var body: some View {
-        VStack(spacing: 16) {
-            Button("Show alert") { showAlert = true }
-                .alert("Title", isPresented: $showAlert) {
-                    Button("OK") {}
-                }
-                .alertContent(isPresented: showAlert) {
+        VStack(spacing: 20) {
+            ColorPicker("Tint", selection: $selectedColor)
+                .labelsHidden()
+
+            Button("Show alert") { isAlertPresented = true }
+                .alert("SwiftUI", isPresented: $isAlertPresented, actions: {
+                    Button("Done") {}
+                        .keyboardShortcut(.defaultAction)
+                        .disabled(!isDoneEnabled)
+                    Button("Close", role: .cancel) {}
+                    TextField("Field", text: $alertTextFieldText)
+                }, message: {
+                    Text("Demo Alert Advance")
+                })
+                .alertContent(isPresented: isAlertPresented, tint: selectedColor) {
                     VStack {
-                        Text("Custom alert content")
-                        ProgressView()
+                        DatePicker("Date", selection: $date, displayedComponents: .date)
+                            .datePickerStyle(.graphical)
+                        Slider(value: $sliderValue, in: 0...100)
+                        Toggle("Enable Done", isOn: $isDoneEnabled)
+                            .tint(selectedColor)
                     }
-                    .padding()
+                    .padding(.horizontal)
                 }
 
-            Button("Show confirmation") { showSheet = true }
-                .confirmationDialog("Title", isPresented: $showSheet) {
-                    Button("Action") {}
-                }
-                .confirmationDialogContent(isPresented: showSheet) {
+            Button("Show confirmation") { isDialogPresented = true }
+                .confirmationDialog("SwiftUI", isPresented: $isDialogPresented, titleVisibility: .visible, actions: {
+                    Button("Done") {}
+                        .keyboardShortcut(.defaultAction)
+                    Button("Close", role: .cancel) {}
+                }, message: {
+                    Text("Demo Alert Advance")
+                })
+                .confirmationDialogContent(isPresented: isDialogPresented, tint: selectedColor) {
                     VStack {
-                        Text("Custom sheet content")
-                        Image(systemName: "hand.thumbsup.fill")
+                        DatePicker("Date", selection: $date, displayedComponents: .date)
+                            .datePickerStyle(.compact)
+                        Slider(value: $sliderValue, in: 0...100)
                     }
-                    .padding()
+                    .padding(.horizontal)
                 }
         }
         .padding()
