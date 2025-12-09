@@ -8,13 +8,20 @@ import UIKit
 
 struct AlertControllerContent<Content: View>: UIViewRepresentable {
     private let content: Content
-    private let preferredStyle: UIAlertController.Style
+    private let predicate: (UIAlertController) -> Bool
     private let tintColor: Color?
+    private let fitting: AlertContentFitting
 
-    init(preferredStyle: UIAlertController.Style = .alert, tint: Color? = nil, @ViewBuilder content: () -> Content) {
-        self.preferredStyle = preferredStyle
+    init(
+        predicate: @escaping (UIAlertController) -> Bool,
+        tint: Color? = nil,
+        fitting: AlertContentFitting,
+        @ViewBuilder content: () -> Content
+    ) {
+        self.predicate = predicate
         self.content = content()
         self.tintColor = tint
+        self.fitting = fitting
     }
     
     func makeUIView(context: Context) -> some UIView {
@@ -35,7 +42,7 @@ struct AlertControllerContent<Content: View>: UIViewRepresentable {
 private extension AlertControllerContent {
     func alertController(for uiView: UIView) -> UIAlertController? {
         guard let alertController = uiView.parentViewController?.alertController,
-              alertController.preferredStyle == preferredStyle
+              predicate(alertController) == true
         else {
             return nil
         }
@@ -51,15 +58,13 @@ private extension AlertControllerContent {
         }
                     
         // Create a hosting controller for our SwiftUI content
-        let hosting = UIHostingController(rootView: content)
+        let hosting = fitting.hostingController(rootView: content)
         hosting.view.backgroundColor = .clear
-        hosting.view.translatesAutoresizingMaskIntoConstraints = false
         
         // Place hosting controller as the alert's contentViewController if available
         alertController.contentViewController = hosting
                 
         updateLayoutContentIfPossible(in: uiView)
-        
         updateTintColorIfPossible(in: uiView)
     }
     
@@ -74,17 +79,12 @@ private extension AlertControllerContent {
         // Ensure the alert sizes to fit the embedded content
         alertController.view.setNeedsLayout()
         alertController.view.layoutIfNeeded()
-        
-        if let preferredContentSize = alertController.contentViewController?.preferredContentSize {
-            alertController.preferredContentSize.height = preferredContentSize.height
-        }
     }
     
     @MainActor
     func updateTintColorIfPossible(in uiView: UIView) {
         guard
-            let alertController = uiView.parentViewController?.alertController,
-            alertController.preferredStyle == preferredStyle
+            let alertController = alertController(for: uiView)
         else {
             return
         }

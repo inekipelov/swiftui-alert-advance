@@ -1,5 +1,5 @@
 //
-//  Preview.swift
+//  Playground.swift
 //
 
 import SwiftUI
@@ -24,18 +24,35 @@ struct RainbowCircle: View {
     }
 }
 
+struct CollapsableRainbowCircle: View {
+    @State private var isCollapsed = true
+    var body: some View {
+        Button(isCollapsed ? "Show" : "Hide") {
+            withAnimation {
+                isCollapsed.toggle()
+            }
+        }
+        if !isCollapsed {
+            RainbowCircle()
+                .frame(height: 200)
+        }
+    }
+}
+
 struct ColoredAlertButton: View {
     let color: Color
+    private(set) var fitting: AlertContentFitting = .fitting(vertical: .infinity)
     @State private(set) var isPresented = false
     @State private(set) var sliderValue: Double = 0
     @State private(set) var isEnabled: Bool = false
     @State private(set) var text: String = ""
     
     var body: some View {
-        Button("Alert Button") {
+        Button("Alert") {
             isPresented.toggle()
         }
         .buttonStyle(.borderedProminent)
+        .buttonBorderShape(.capsule)
         .controlSize(.large)
         .tint(color)
         .alert("SwiftUI", isPresented: $isPresented, actions: {
@@ -47,27 +64,30 @@ struct ColoredAlertButton: View {
         }, message: {
             Text("Alert Advance")
         })
-        .alertContent(isPresented: isPresented, tint: color) {
-            Group {
+        .alertContent(isPresented: isPresented, tint: color, fitting: fitting) {
+            VStack {
                 Slider(value: $sliderValue, in: 0...100)
                 Toggle("Test toggle", isOn: $isEnabled)
                     .tint(color)
+                CollapsableRainbowCircle()
             }
-            .padding(.horizontal)
+            .padding()
         }
     }
 }
 struct ColoredConfirmationDialogButton: View {
     let color: Color
+    private(set) var fitting: AlertContentFitting = .fitting(vertical: .infinity)
     @State private(set) var isPresented = false
     @State private(set) var sliderValue: Double = 0
     @State private(set) var isEnabled: Bool = true
     
     var body: some View {
-        Button("Confirmation Button") {
+        Button("Confirmation") {
             isPresented.toggle()
         }
         .buttonStyle(.borderedProminent)
+        .buttonBorderShape(.capsule)
         .controlSize(.large)
         .tint(color)
         .confirmationDialog("SwiftUI", isPresented: $isPresented, titleVisibility: .visible, actions: {
@@ -77,13 +97,14 @@ struct ColoredConfirmationDialogButton: View {
         }, message: {
             Text("Alert Advance")
         })
-        .confirmationDialogContent(isPresented: isPresented, tint: color) {
-            Group {
+        .confirmationDialogContent(isPresented: isPresented, tint: color, fitting: fitting) {
+            VStack {
                 Slider(value: $sliderValue, in: 0...100)
                 Toggle("Test toggle", isOn: $isEnabled)
                     .tint(color)
+                CollapsableRainbowCircle()
             }
-            .padding(.horizontal)
+            .padding()
         }
     }
 }
@@ -105,36 +126,14 @@ struct ColoredConfirmationDialogButton: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .bottomBar) {
-                Button("Confirmation dialog") {
-                    isDialogPresented.toggle()
-                }
-                .confirmationDialog("SwiftUI", isPresented: $isDialogPresented, titleVisibility: .visible, actions: {
-                    Button("Done") {}
-                        .keyboardShortcut(.defaultAction)
-                    Button("Close", role: .cancel) {}
-                }, message: {
-                    Text("Alert Advance")
-                })
-                .confirmationDialogContent(isPresented: isDialogPresented) {
-                    RainbowCircle()
-                }
+            ToolbarItemGroup(placement: .topBarTrailing) {
+                ColoredAlertButton(color: .purple)
+                ColoredConfirmationDialogButton(color: .indigo)
             }
             
-            ToolbarItem(placement: .topBarTrailing) {
-                Button("Alert") {
-                    isAlertPresented.toggle()
-                }
-                .alert("SwiftUI", isPresented: $isAlertPresented, actions: {
-                    Button("Done") {}
-                        .keyboardShortcut(.defaultAction)
-                    Button("Close", role: .cancel) {}
-                }, message: {
-                    Text("Alert Advance")
-                })
-                .alertContent(isPresented: isAlertPresented) {
-                    RainbowCircle()
-                }
+            ToolbarItemGroup(placement: .bottomBar) {
+                ColoredAlertButton(color: .orange)
+                ColoredConfirmationDialogButton(color: .green)
             }
         }
     }

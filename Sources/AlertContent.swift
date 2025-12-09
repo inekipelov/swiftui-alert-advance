@@ -13,11 +13,18 @@ public extension View {
     func alertContent<C>(
         isPresented: Bool,
         tint: Color? = nil,
+        fitting: AlertContentFitting = .fitting(vertical: .infinity),
         @ViewBuilder content: () -> C
     ) -> some View where C: View {
         self.background {
             if isPresented {
-                AlertControllerContent(preferredStyle: .alert, tint: tint) {
+                AlertControllerContent(
+                    predicate: {
+                        $0.preferredStyle == .alert
+                    },
+                    tint: tint,
+                    fitting: fitting
+                ) {
                     content()
                 }
             }
@@ -29,11 +36,18 @@ public extension View {
         isPresented: Bool,
         presenting data: T?,
         tint: Color? = nil,
+        fitting: AlertContentFitting = .fitting(vertical: .infinity),
         @ViewBuilder content: (T) -> C
     ) -> some View where C: View {
         self.background {
             if isPresented, let data {
-                AlertControllerContent(preferredStyle: .alert, tint: tint) {
+                AlertControllerContent(
+                    predicate: {
+                        $0.preferredStyle == .alert
+                    },
+                    tint: tint,
+                    fitting: fitting
+                ) {
                     content(data)
                 }
             }
@@ -45,11 +59,18 @@ public extension View {
         isPresented: Bool,
         error: E?,
         tint: Color? = nil,
+        fitting: AlertContentFitting = .fitting(vertical: .infinity),
         @ViewBuilder content: (E) -> C
     ) -> some View where E : LocalizedError, C : View {
         self.background {
             if isPresented, let error {
-                AlertControllerContent(preferredStyle: .alert, tint: tint) {
+                AlertControllerContent(
+                    predicate: {
+                        $0.preferredStyle == .alert
+                    },
+                    tint: tint,
+                    fitting: fitting
+                ) {
                     content(error)
                 }
             }
@@ -65,6 +86,7 @@ public extension View {
     @Previewable @State var sliderValue: Double = 0.0
     @Previewable @State var isDoneEnabled: Bool = false
     @Previewable @State var alertTextFieldText: String = ""
+    @Previewable @State var date: Date = .now
 
     HStack {
         ColorPicker("Tint Color", selection: $selectedColor)
@@ -73,6 +95,7 @@ public extension View {
             isPresented.toggle()
         }
         .controlSize(.large)
+        .buttonBorderShape(.capsule)
         .buttonStyle(.bordered)
         .tint(selectedColor)
         .shadow(radius: 0.2)
@@ -86,7 +109,9 @@ public extension View {
             Text("Demo Alert Advance")
         })
         .alertContent(isPresented: isPresented, tint: selectedColor) {
-            Group {
+            VStack {
+                DatePicker("Date", selection: $date, displayedComponents: .date)
+                    .datePickerStyle(.graphical)
                 Slider(value: $sliderValue, in: 0...100)
                 Toggle("Enable Done", isOn: $isDoneEnabled)
                     .tint(selectedColor)
