@@ -3,8 +3,7 @@
 [![Swift Version](https://img.shields.io/badge/Swift-6.0+-orange.svg)](https://swift.org/)
 [![iOS](https://img.shields.io/badge/iOS-13.0+-blue.svg)](https://developer.apple.com/ios/)
 [![macOS](https://img.shields.io/badge/macOS-10.15+-blue.svg)](https://developer.apple.com/macos/)
-[![Mac Catalyst](https://img.shields.io/badge/Mac%20Catalyst-13.0+-blue.svg)](https://developer.apple.com/mac-catalyst/)  
-[![Tests](https://github.com/inekipelov/swiftui-alert-advance/actions/workflows/test.yml/badge.svg)](https://github.com/inekipelov/swiftui-alert-advance/actions/workflows/test.yml)
+[![Mac Catalyst](https://img.shields.io/badge/Mac%20Catalyst-13.0+-blue.svg)](https://developer.apple.com/mac-catalyst/)
 
 Embed SwiftUI views inside `UIAlertController` alerts and action sheets with simple `alertContent` and `confirmationDialogContent` modifiers. Requires Swift 6 and works on iOS/iPadOS 13+, macOS 10.15+ for package compatibility, and Mac Catalyst 13+. `confirmationDialogContent` remains available from iOS 15+ and Mac Catalyst 15+ because it builds on SwiftUI `confirmationDialog`.
 
