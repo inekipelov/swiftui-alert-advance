@@ -6,7 +6,7 @@ Swift Package that embeds SwiftUI content inside `UIAlertController` alerts and 
 
 - Package manager: SwiftPM
 - Build: `swift build -v`
-- Tests: `xcodebuild -scheme swiftui-alert-advance -destination 'platform=iOS Simulator,name=iPhone 16 Pro Max,OS=26.0' -skipPackagePluginValidation -skipMacroValidation test`
+- Tests: `xcodebuild -scheme swiftui-alert-advance -destination 'platform=iOS Simulator,name=iPhone 17 Pro Max,OS=26.2' -skipPackagePluginValidation -skipMacroValidation test`
 - CI workflow: `.github/workflows/test.yml`
 - Default branch: `main`
 

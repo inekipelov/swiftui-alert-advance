@@ -12,14 +12,14 @@ jobs:
   package-and-ios-tests:
     runs-on: macos-26
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Build Swift package
         run: swift build -v
       - name: Run unit tests on current iOS Simulator
         run: |
           xcodebuild \
             -scheme swiftui-alert-advance \
-            -destination 'platform=iOS Simulator,name=iPhone 16 Pro Max,OS=26.0' \
+            -destination 'platform=iOS Simulator,name=iPhone 17 Pro Max,OS=26.2' \
             -skipPackagePluginValidation \
             -skipMacroValidation \
             test
