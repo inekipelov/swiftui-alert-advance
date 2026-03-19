@@ -1,11 +1,12 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 import PackageDescription
 
 let package = Package(
     name: "swiftui-alert-advance",
     platforms: [
-        .iOS(.v15),
-        .macCatalyst(.v15)
+        .iOS(.v13),
+        .macOS(.v10_15),
+        .macCatalyst(.v13)
     ],
     products: [
         .library(
@@ -13,10 +14,15 @@ let package = Package(
             targets: ["AlertAdvance"]
         )
     ],
-    dependencies: [],
+    dependencies: [
+        .package(url: "https://github.com/inekipelov/swift-obfuscate-macro.git", from: "1.0.0")
+    ],
     targets: [
         .target(
             name: "AlertAdvance",
+            dependencies: [
+                .product(name: "Obfuscate", package: "swift-obfuscate-macro")
+            ],
             path: "Sources"
         ),
         .testTarget(

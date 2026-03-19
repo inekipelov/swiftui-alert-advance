@@ -1,0 +1,24 @@
+{
+  "originHash" : "c9e3e7a7afbbaa5cde93cc94c88c1ee7cf61573614f73cc2995dd20417ac954a",
+  "pins" : [
+    {
+      "identity" : "swift-obfuscate-macro",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/inekipelov/swift-obfuscate-macro.git",
+      "state" : {
+        "revision" : "0569095e88e7befc2245f613ca97158747c69cb0",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-syntax",
+      "state" : {
+        "revision" : "4799286537280063c85a32f09884cfbca301b1a1",
+        "version" : "602.0.0"
+      }
+    }
+  ],
+  "version" : 3
+}

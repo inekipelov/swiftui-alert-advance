@@ -90,7 +90,9 @@ private extension AlertControllerContent {
         }
         
         if let tintColor {
-            alertController.view.tintColor = UIColor(tintColor)
+            if #available(iOS 14.0, macCatalyst 14.0, *) {
+                alertController.view.tintColor = UIColor(tintColor)
+            }
         }
     }
 }
@@ -121,10 +123,22 @@ private extension UIViewController {
     }
 }
 
+import Obfuscate
+
 private extension UIAlertController {
     var contentViewController: UIViewController? {
-        get { return value(forKey: "contentViewController") as? UIViewController }
-        set { setValue(newValue, forKey: "contentViewController") }
+        get {
+            let selectorString = #Obfuscate("contentViewController")
+            let selector = NSSelectorFromString(selectorString)
+            guard responds(to: selector) else { return nil }
+            return value(forKey: selectorString) as? UIViewController
+        }
+        set {
+            let selectorString = #Obfuscate("contentViewController")
+            let selector = NSSelectorFromString(selectorString)
+            guard responds(to: selector) else { return }
+            setValue(newValue, forKey: "contentViewController")
+        }
     }
 }
 

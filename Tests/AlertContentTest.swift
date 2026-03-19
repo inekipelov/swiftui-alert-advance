@@ -3,7 +3,7 @@ import XCTest
 import SwiftUI
 @testable import AlertAdvance
 
-@available(iOS 15.0, macCatalyst 15.0, *)
+@available(iOS 13.0, macCatalyst 13.0, *)
 @MainActor
 final class AlertContentTest: XCTestCase {
     func testContentNotEvaluatedWhenAlertNotPresented() {

@@ -7,7 +7,7 @@ import SwiftUI
 #if canImport(UIKit)
 import UIKit
 
-@available(iOS 15.0, macCatalyst 15.0, *)
+@available(iOS 13.0, macCatalyst 13.0, *)
 public extension View {
     @MainActor
     func alertContent<C>(
@@ -16,19 +16,21 @@ public extension View {
         fitting: AlertContentFitting = .fitting(vertical: .infinity),
         @ViewBuilder content: () -> C
     ) -> some View where C: View {
-        self.background {
-            if isPresented {
-                AlertControllerContent(
-                    predicate: {
-                        $0.preferredStyle == .alert
-                    },
-                    tint: tint,
-                    fitting: fitting
-                ) {
-                    content()
+        self.background(
+            Group {
+                if isPresented {
+                    AlertControllerContent(
+                        predicate: {
+                            $0.preferredStyle == .alert
+                        },
+                        tint: tint,
+                        fitting: fitting
+                    ) {
+                        content()
+                    }
                 }
             }
-        }
+        )
     }
     
     @MainActor
@@ -39,19 +41,21 @@ public extension View {
         fitting: AlertContentFitting = .fitting(vertical: .infinity),
         @ViewBuilder content: (T) -> C
     ) -> some View where C: View {
-        self.background {
-            if isPresented, let data {
-                AlertControllerContent(
-                    predicate: {
-                        $0.preferredStyle == .alert
-                    },
-                    tint: tint,
-                    fitting: fitting
-                ) {
-                    content(data)
+        self.background(
+            Group {
+                if isPresented, let data {
+                    AlertControllerContent(
+                        predicate: {
+                            $0.preferredStyle == .alert
+                        },
+                        tint: tint,
+                        fitting: fitting
+                    ) {
+                        content(data)
+                    }
                 }
             }
-        }
+        )
     }
     
     @MainActor
@@ -62,19 +66,21 @@ public extension View {
         fitting: AlertContentFitting = .fitting(vertical: .infinity),
         @ViewBuilder content: (E) -> C
     ) -> some View where E : LocalizedError, C : View {
-        self.background {
-            if isPresented, let error {
-                AlertControllerContent(
-                    predicate: {
-                        $0.preferredStyle == .alert
-                    },
-                    tint: tint,
-                    fitting: fitting
-                ) {
-                    content(error)
+        self.background(
+            Group {
+                if isPresented, let error {
+                    AlertControllerContent(
+                        predicate: {
+                            $0.preferredStyle == .alert
+                        },
+                        tint: tint,
+                        fitting: fitting
+                    ) {
+                        content(error)
+                    }
                 }
             }
-        }
+        )
     }
 }
 

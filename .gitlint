@@ -1,0 +1,14 @@
+[general]
+contrib=contrib-title-conventional-commits
+ignore=body-is-missing
+ignore-merge-commits=true
+ignore-revert-commits=true
+
+[title-max-length]
+line-length=72
+
+[body-max-line-length]
+line-length=72
+
+[contrib-title-conventional-commits]
+types=feat,fix,docs,style,refactor,test,chore,build,ci,perf,revert

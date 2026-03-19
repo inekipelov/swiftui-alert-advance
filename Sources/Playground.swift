@@ -7,6 +7,7 @@ import SwiftUI
 import UIKit
 
 #if DEBUG && (os(iOS) || targetEnvironment(macCatalyst))
+@available(iOS 15.0, macCatalyst 15.0, *)
 struct RainbowCircle: View {
     @State private var color: Color = .black
     
@@ -24,6 +25,7 @@ struct RainbowCircle: View {
     }
 }
 
+@available(iOS 15.0, macCatalyst 15.0, *)
 struct CollapsableRainbowCircle: View {
     @State private var isCollapsed = true
     var body: some View {
@@ -39,6 +41,7 @@ struct CollapsableRainbowCircle: View {
     }
 }
 
+@available(iOS 15.0, macCatalyst 15.0, *)
 struct ColoredAlertButton: View {
     let color: Color
     private(set) var fitting: AlertContentFitting = .fitting(vertical: .infinity)
@@ -75,6 +78,7 @@ struct ColoredAlertButton: View {
         }
     }
 }
+@available(iOS 15.0, macCatalyst 15.0, *)
 struct ColoredConfirmationDialogButton: View {
     let color: Color
     private(set) var fitting: AlertContentFitting = .fitting(vertical: .infinity)

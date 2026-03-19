@@ -1,0 +1,25 @@
+# This workflow validates package builds and current iOS simulator tests.
+
+name: Test
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  package-and-ios-tests:
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Swift package
+        run: swift build -v
+      - name: Run unit tests on current iOS Simulator
+        run: |
+          xcodebuild \
+            -scheme swiftui-alert-advance \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro Max,OS=26.0' \
+            -skipPackagePluginValidation \
+            -skipMacroValidation \
+            test

@@ -40,16 +40,19 @@ public extension AlertContentFitting {
 }
 
 extension AlertContentFitting {
-    func hostingController<Content: View>(rootView: Content) -> UIViewController {
+    @MainActor
+    func hostingController<Content: View>(rootView: Content) -> UIHostingController<Content> {
         HostingController(rootView: rootView, fitting: self)
     }
 }
 
 private extension AlertContentFitting {
+    @MainActor
     func size(in uiview: UIView) -> CGSize {
         CGSize(width: width ?? uiview.bounds.width, height: height ?? uiview.bounds.height)
     }
     
+    @MainActor
     var width: CGFloat? {
         switch horizontal {
         case .view:
@@ -67,6 +70,7 @@ private extension AlertContentFitting {
         }
     }
     
+    @MainActor
     var height: CGFloat? {
         switch vertical {
         case .view:
@@ -86,6 +90,7 @@ private extension AlertContentFitting {
 }
 
 private extension AlertContentFitting {
+    @MainActor
     final class HostingController<Content: View>: UIHostingController<Content> {
         private let fitting: AlertContentFitting
         
@@ -94,7 +99,7 @@ private extension AlertContentFitting {
             super.init(rootView: rootView)
         }
         
-        @MainActor @preconcurrency required dynamic init?(coder aDecoder: NSCoder) {
+        @preconcurrency required dynamic init?(coder aDecoder: NSCoder) {
             fatalError("init(coder:) has not been implemented")
         }
         
@@ -112,3 +117,4 @@ private extension AlertContentFitting {
 }
 
 #endif
+
